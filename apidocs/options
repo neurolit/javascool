@@ -1,25 +1,23 @@
 -classpath
-'C:/Users/PhilippeGeek/Documents/workspace/javascool-5.0-SNAPSHOT/javascool-proglets-manager/target/classes;C:/Users/PhilippeGeek/.m2/repository/commons-io/commons-io/2.4/commons-io-2.4.jar;C:/Users/PhilippeGeek/.m2/repository/org/json/org.json/chargebee-1.0/org.json-chargebee-1.0.jar;C:/Users/PhilippeGeek/.m2/repository/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar'
+'C:/Users/PhilippeGeek/Documents/workspace/javascool-5.0-SNAPSHOT/target/classes;C:/Users/PhilippeGeek/Documents/workspace/javascool-5.0-SNAPSHOT/javascool-compiler/target/classes;C:/Users/PhilippeGeek/Documents/workspace/javascool-5.0-SNAPSHOT/javascool-proglets-manager/target/classes;C:/Users/PhilippeGeek/.m2/repository/commons-io/commons-io/2.4/commons-io-2.4.jar;C:/Users/PhilippeGeek/.m2/repository/org/eclipse/jdt/core/compiler/ecj/3.7.2/ecj-3.7.2.jar;C:/Users/PhilippeGeek/.m2/repository/commons-cli/commons-cli/1.2/commons-cli-1.2.jar;C:/Users/PhilippeGeek/.m2/repository/org/json/org.json/chargebee-1.0/org.json-chargebee-1.0.jar;C:/Users/PhilippeGeek/.m2/repository/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar'
 -encoding
 'UTF-8'
 -protected
 -sourcepath
-'C:/Users/PhilippeGeek/Documents/workspace/javascool-5.0-SNAPSHOT/javascool-proglets-manager/src/main/java'
+'C:/Users/PhilippeGeek/Documents/workspace/javascool-5.0-SNAPSHOT/javascool-compiler/src/main/java;C:/Users/PhilippeGeek/Documents/workspace/javascool-5.0-SNAPSHOT/javascool-proglets-manager/src/main/java'
 -author
 -bottom
 'Copyright &#169; 2012 <a href="http://inria.fr">INRIA</a>. All Rights Reserved.'
 -charset
 'UTF-8'
 -d
-'C:/Users/PhilippeGeek/Documents/workspace/javascool-5.0-SNAPSHOT/javascool-proglets-manager/target/site/apidocs'
+'C:/Users/PhilippeGeek/Documents/workspace/javascool-5.0-SNAPSHOT/target/site/apidocs'
 -docencoding
 'UTF-8'
 -doctitle
-'Gestionnaire de Proglets 5.0-SNAPSHOT API'
+'Java\'s Cool 5.0-SNAPSHOT API'
 -link
 'http://java.sun.com/javase/6/docs/api'
--linkoffline
-'http://javascool.org/compiler/apidocs' 'C:/Users/PhilippeGeek/Documents/workspace/javascool-5.0-SNAPSHOT/javascool-compiler/target/site/apidocs'
 -use
 -windowtitle
-'Gestionnaire de Proglets 5.0-SNAPSHOT API'
+'Java\'s Cool 5.0-SNAPSHOT API'
