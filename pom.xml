@@ -198,5 +198,6 @@
 	</licenses>
   <modules>
     <module>javascool-compiler</module>
+    <module>javascool-proglets-manager</module>
   </modules>
 </project>
