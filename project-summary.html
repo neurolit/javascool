@@ -21,14 +21,18 @@
             </head>
         <body class="topBarEnabled">
           
-                        
+                
                     
                 
 
     <div id="topbar" class="navbar navbar-fixed-top ">
       <div class="navbar-inner">
-                                  <div class="container"><div class="nav-collapse">
-            
+                <div class="container-fluid">
+        <a data-target=".nav-collapse" data-toggle="collapse" class="btn btn-navbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </a>
                 
                                                                                 <a class="brand" href="index.html"  title="Maven Fluido Skin">
 
@@ -38,14 +42,8 @@
                 </a>
                     
                     
-                      <form id="search-form" action="http://www.google.com/search" method="get"  class="navbar-search pull-right" >
-    
-  <input value="javascool.org/compiler" name="sitesearch" type="hidden"/>
-  <input class="search-query" name="q" id="query" type="text" />
-</form>
-<script type="text/javascript" src="http://www.google.com/coop/cse/brand?form=search-form"></script>
           
-                                                              
+          
                    
                       </div>
           
@@ -53,11 +51,11 @@
       </div>
     </div>
     
-        <div class="container">
+        <div class="container-fluid">
           <div id="banner">
         <div class="pull-left">
                                 <div id="bannerLeft">
-                <h2>Java's Cool Compiler</h2>
+                <h2>Java's Cool</h2>
                 </div>
                       </div>
         <div class="pull-right">  </div>
@@ -77,18 +75,48 @@
                             </ul>
       </div>
 
-      
+            
+      <div class="row-fluid">
+        <div id="leftColumn" class="span3">
+          <div class="well sidebar-nav">
                 
-        <div id="bodyColumn" >
-                                  
-            <div class="section"><h2>Project Summary<a name="Project_Summary"></a></h2><a name="Project_Summary"></a><div class="section"><h3>Project Information<a name="Project_Information"></a></h3><a name="Project_Information"></a><table border="0" class="table table-striped"><tr class="a"><th>Field</th><th>Value</th></tr><tr class="b"><td>Name</td><td>Java's Cool Compiler</td></tr><tr class="a"><td>Description</td><td>Un IDE pour l'apprentisage de la programation et de l'algorithmique</td></tr><tr class="b"><td>Homepage</td><td><a class="externalLink" href="http://javascool.org/compiler">http://javascool.org/compiler</a></td></tr></table></div><div class="section"><h3>Project Organization<a name="Project_Organization"></a></h3><a name="Project_Organization"></a><table border="0" class="table table-striped"><tr class="a"><th>Field</th><th>Value</th></tr><tr class="b"><td>Name</td><td>INRIA</td></tr><tr class="a"><td>URL</td><td><a class="externalLink" href="http://inria.fr">http://inria.fr</a></td></tr></table></div><div class="section"><h3>Build Information<a name="Build_Information"></a></h3><a name="Build_Information"></a><table border="0" class="table table-striped"><tr class="a"><th>Field</th><th>Value</th></tr><tr class="b"><td>GroupId</td><td>org.javascool</td></tr><tr class="a"><td>ArtifactId</td><td>javascool-compiler</td></tr><tr class="b"><td>Version</td><td>5.0-SNAPSHOT</td></tr><tr class="a"><td>Type</td><td>jar</td></tr></table></div></div>
+            
+                <ul class="nav nav-list">
+  </ul>
+                
+            
+                            <form id="search-form" action="http://www.google.com/search" method="get" >
+    
+  <input value="javascool.org" name="sitesearch" type="hidden"/>
+  <input class="search-query" name="q" id="query" type="text" />
+</form>
+<script type="text/javascript" src="http://www.google.com/coop/cse/brand?form=search-form"></script>
+          
+          <hr class="divider" />
+
+           <div id="poweredBy">
+                            <div class="clear"></div>
+                            <div class="clear"></div>
+                            <div class="clear"></div>
+                             <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+        <img class="builtBy" alt="Built by Maven" src="./images/logos/maven-feather.png" />
+      </a>
                   </div>
+          </div>
+        </div>
+        
+                
+        <div id="bodyColumn"  class="span9" >
+                                  
+            <div class="section"><h2>Project Summary<a name="Project_Summary"></a></h2><a name="Project_Summary"></a><div class="section"><h3>Project Information<a name="Project_Information"></a></h3><a name="Project_Information"></a><table border="0" class="table table-striped"><tr class="a"><th>Field</th><th>Value</th></tr><tr class="b"><td>Name</td><td>Java's Cool</td></tr><tr class="a"><td>Description</td><td>Un IDE pour l'apprentisage de la programation et de l'algorithmique</td></tr><tr class="b"><td>Homepage</td><td><a class="externalLink" href="http://javascool.org">http://javascool.org</a></td></tr></table></div><div class="section"><h3>Project Organization<a name="Project_Organization"></a></h3><a name="Project_Organization"></a><table border="0" class="table table-striped"><tr class="a"><th>Field</th><th>Value</th></tr><tr class="b"><td>Name</td><td>INRIA</td></tr><tr class="a"><td>URL</td><td><a class="externalLink" href="http://inria.fr">http://inria.fr</a></td></tr></table></div><div class="section"><h3>Build Information<a name="Build_Information"></a></h3><a name="Build_Information"></a><table border="0" class="table table-striped"><tr class="a"><th>Field</th><th>Value</th></tr><tr class="b"><td>GroupId</td><td>org.javascool</td></tr><tr class="a"><td>ArtifactId</td><td>javascool</td></tr><tr class="b"><td>Version</td><td>5.0-SNAPSHOT</td></tr><tr class="a"><td>Type</td><td>pom</td></tr></table></div></div>
+                  </div>
+            </div>
           </div>
 
     <hr/>
 
     <footer>
-            <div class="container">
+            <div class="container-fluid">
               <div class="row span12">Copyright &copy;                    2012
                         <a href="http://inria.fr">INRIA</a>.
             All Rights Reserved.      
@@ -96,11 +124,6 @@
       </div>
 
         
-                <p id="poweredBy" class="pull-right">
-                          <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
-        <img class="builtBy" alt="Built by Maven" src="./images/logos/maven-feather.png" />
-      </a>
-              </p>
         
                 </div>
     </footer>
