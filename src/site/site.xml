@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Java's Cool">
+    <body>
+        <menu name="Le projet">
+            <item name="Téléchargements" href="download.html"/>
+            <item name="Présentation" href="index.html"/>
+            <item name="Note de version" href="release-notes.html"/>
+            <item name="A propos" href="about.html"/>
+            <item name="Le futur" href="roadmap.html"/>
+        </menu>
+        <menu name="Développeurs">
+            <item name="API Java" href="apidocs/index.html"/>
+            <item name="Les sous-projets" href="modules.html"/>
+        </menu>
+    </body>
+    <skin>
+        <groupId>org.apache.maven.skins</groupId>
+        <artifactId>maven-fluido-skin</artifactId>
+        <version>1.3.0</version>
+    </skin>
+
+    <custom>
+        <fluidoSkin>
+            <topBarEnabled>true</topBarEnabled>
+            <sideBarEnabled>true</sideBarEnabled>
+            <sourceLineNumbersEnabled>true</sourceLineNumbersEnabled>
+        </fluidoSkin>
+    </custom>
+</project>
