@@ -1,3 +1,5 @@
+package org.javascool.core;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.javascool.compiler.Compiler;
@@ -64,7 +66,7 @@ public class ProgletCompiler {
      *
      * @param progletName Le nom de code de la proglet
      */
-    protected ProgletCodeCompiler(String progletName) {
+    protected ProgletCompiler(String progletName) {
         if (isDefaultProglet(progletName)) return; // On ne charge rien si c'est la proglet native
         assertProgletExists(progletName);
         proglet = progletName;
@@ -78,7 +80,7 @@ public class ProgletCompiler {
      * @param progletName Le nom de code de la proglet
      * @param code        Le code JVS à compiler
      */
-    public ProgletCodeCompiler(String progletName, String code) {
+    public ProgletCompiler(String progletName, String code) {
         this(progletName);
         try {
             File tmpFolder = new File(tmpDirectory, code.hashCode() + "-compile");
@@ -99,7 +101,7 @@ public class ProgletCompiler {
      * @param progletName Le nom de code de la proglet
      * @param jvsFile     Le fichier JVS à compiler
      */
-    public ProgletCodeCompiler(String progletName, File jvsFile) {
+    public ProgletCompiler(String progletName, File jvsFile) {
         this(progletName);
         assertFileExists(jvsFile);
         this.jvsFile = jvsFile.getAbsoluteFile();

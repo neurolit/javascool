@@ -1,10 +1,18 @@
 package org.javascool.core;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import org.apache.commons.io.Charsets;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.LogFactory;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URI;
 import java.nio.charset.Charset;
@@ -39,14 +47,39 @@ public class JVSFile extends File {
     private static final long serialVersionUID = -8992334089819709141L;
 
     /**
-     * Contenu du fichier sur le disque dur.
+     * Permet de savoir si le fichier est temporaire ou non.
      */
-    private String content;
+    private boolean isTMP = false;
 
     /**
-     * Contenu du fichier dans le logiciel.
+     * Contenu du fichier sur le disque dur.
      */
-    private String contentNotSaved;
+    private final StringProperty content = new SimpleStringProperty(this, "content", "");
+
+    /**
+     * Permet de retenir si le fichier doit être sauvegarder
+     */
+    private final BooleanProperty saved = new SimpleBooleanProperty(this, "saved", true);
+
+    {
+        content.addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String s2) {
+                if (!s.equals(s2))
+                    saved.setValue(false);
+            }
+        });
+    }
+
+    /**
+     * Crée un fichier temporaire.
+     *
+     * @throws IOException Dans le cas où il est impossible de créer le fichier temporaire
+     */
+    public JVSFile() throws IOException {
+        super(File.createTempFile("jvs", ".jvs").getAbsolutePath());
+        isTMP = true;
+    }
 
     /**
      * Crée un instance à partir d'un répertoir parent et d'un enfant supposé.
@@ -54,7 +87,7 @@ public class JVSFile extends File {
      * @param parent Le répertoire parent
      * @param child  l'enfant dans ce répertoire.
      */
-    public JVSFile(File parent, String child) {
+    public JVSFile(File parent, String child) throws IOException {
         super(parent, child);
         loadFromFile();
     }
@@ -65,7 +98,7 @@ public class JVSFile extends File {
      * @param path L'adresse du fichier dans le système.
      * @see File#File(String)
      */
-    public JVSFile(String path) {
+    public JVSFile(String path) throws IOException {
         super(path);
         loadFromFile();
     }
@@ -80,7 +113,7 @@ public class JVSFile extends File {
      * @param uri L'URI à ouvrir.
      * @see File#File(URI)
      */
-    public JVSFile(URI uri) {
+    public JVSFile(URI uri) throws IOException {
         super(uri);
         loadFromFile();
     }
@@ -90,26 +123,16 @@ public class JVSFile extends File {
      * <p>En cas d'erreur, le contenu du fichier sera estimé comme vide.
      * On loggue tout de même l'erreur mais elle ne doit pas troubler
      * le fonctionnement de l'application.</p>
-     * <p>Par la suite, la fonction {@link #isLoaded()} permet de savoir
-     * si le fichier a correctement été chargé.</p>
+     *
+     * @throws IOException En cas d'erreur lors de l'ouverture du fichier.
      */
-    private void loadFromFile() {
+    private void loadFromFile() throws IOException {
         try {
-            content = contentNotSaved = FileUtils.readFileToString(this, JVSFile.ENCODING);
+            content.setValue(FileUtils.readFileToString(this, JVSFile.ENCODING));
         } catch (IOException e) {
             LogFactory.getLog(JVSFile.class).error("Impossible d'ouvrir le fichier " + this, e);
+            throw e;
         }
-    }
-
-    /**
-     * Permet de savoir si le fichier a pu être chargé correctement.
-     * <p>Si ce n'est pas le cas alors une erreur s'est surrement produite,
-     * le fichier peut ne pas être accessible</p>
-     *
-     * @return vrai si le fichier est correctement chargé.
-     */
-    public boolean isLoaded() {
-        return content != null;
     }
 
     /**
@@ -121,7 +144,7 @@ public class JVSFile extends File {
      * @param content Le contenu actuel du fichier
      */
     public void updateContent(String content) {
-        contentNotSaved = content;
+        this.content.setValue(content);
     }
 
     /**
@@ -133,7 +156,7 @@ public class JVSFile extends File {
      * @return Le contenu du fichier sous forme d'une chaîne de caractères
      */
     public String getContent() {
-        return content;
+        return this.content.getValue();
     }
 
     /**
@@ -152,19 +175,34 @@ public class JVSFile extends File {
 
     /**
      * Enregistre le contenu du fichier sur le disque dur.
+     * <p><em>NB : Un fichier temporaire ne peut pas être enregistrer. Si tel est le cas pour le fichier actuel,
+     * alors la fonction renvera toujours faux.</em></p>
      *
      * @return vrai si tout s'est bien passé.
      */
     public boolean save() {
+        if (isTempFile()) return false;
         try {
-            this.content = this.contentNotSaved;
-            FileUtils.writeStringToFile(this, content, ENCODING);
+            FileUtils.writeStringToFile(this, content.getValue(), ENCODING);
             loadFromFile();
+            saved.setValue(true);
             return true;
         } catch (Exception e) {
             LogFactory.getLog(getClass()).error("Erreur lors de la sauvgarde de " + this, e);
+            saved.setValue(false);
             return false;
         }
+    }
+
+    /**
+     * Permet de savoir si le fichier est temporaire.
+     * <p>Lors de l'enregistrement d'un fichier temporaire, on doit demander à l'utilisateur où il souhaite
+     * l'enregistrer.</p>
+     *
+     * @return vrai si le fichier est temporaire
+     */
+    public boolean isTempFile() {
+        return isTMP;
     }
 
     /**
@@ -173,7 +211,7 @@ public class JVSFile extends File {
      * @return vrai si le fichier doit être sauvegardé
      */
     public boolean hasToSave() {
-        return contentNotSaved.equals(content);
+        return isTempFile() || saved.get();
     }
 
     /**
@@ -190,8 +228,8 @@ public class JVSFile extends File {
     public boolean equals(Object obj) {
         if (obj instanceof JVSFile) {
             return getAbsolutePath().equals(((JVSFile) obj).getAbsolutePath()) &&
-                    content.equals(((JVSFile) obj).content) &&
-                    contentNotSaved.equals(((JVSFile) obj).contentNotSaved);
+                    content.getValue().equals(((JVSFile) obj).content.getValue()) &&
+                    saved.getValue().equals(((JVSFile) obj).saved.getValue());
         } else {
             return false;
         }
@@ -203,5 +241,22 @@ public class JVSFile extends File {
     @Override
     public String toString() {
         return getAbsolutePath();
+    }
+
+    /**
+     * Charge un fichier depuis le web dans un fichier temporaire.
+     */
+    public static JVSFile loadFromWeb(URI fileUri) throws IOException {
+        if (fileUri.getScheme().equals("file")) return new JVSFile(fileUri);
+        try {
+            final JVSFile file = new JVSFile();
+            IOUtils.copy(fileUri.toURL().openStream(), new FileOutputStream(file));
+            file.loadFromFile();
+            file.saved.set(false);
+            return file;
+        } catch (IOException e) {
+            LogFactory.getLog(JVSFile.class).error("Impossible d'ouvrir " + fileUri, e);
+            throw e;
+        }
     }
 }
