@@ -1,4 +1,4 @@
-package org.javascool.core;
+package org.javascool.compiler;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -28,13 +28,13 @@ import java.nio.charset.Charset;
  * Cette interaction est géré depuis le javascool-ui.</p>
  * <p>Pour utiliser cette classe, on peut instancier de la même fâçon
  * qu'un fichier ou alors à partir d'un existant.<br>
- * {@code JVSFile file=new JVSFile((File)file);}<br>
- * {@code JVSFile file=new JVSFile((String)path);}</p>
+ * {@code JVSSourceFile file=new JVSSourceFile((File)file);}<br>
+ * {@code JVSSourceFile file=new JVSSourceFile((String)path);}</p>
  *
  * @author PhilippeGeek
  * @version 5.0
  */
-public class JVSFile extends File {
+public class JVSSourceFile extends File {
 
     /**
      * L'encodage par défaut des fichiers Java's Cool.
@@ -76,7 +76,7 @@ public class JVSFile extends File {
      *
      * @throws IOException Dans le cas où il est impossible de créer le fichier temporaire
      */
-    public JVSFile() throws IOException {
+    public JVSSourceFile() throws IOException {
         super(File.createTempFile("jvs", ".jvs").getAbsolutePath());
         isTMP = true;
     }
@@ -87,7 +87,7 @@ public class JVSFile extends File {
      * @param parent Le répertoire parent
      * @param child  l'enfant dans ce répertoire.
      */
-    public JVSFile(File parent, String child) throws IOException {
+    public JVSSourceFile(File parent, String child) throws IOException {
         super(parent, child);
         loadFromFile();
     }
@@ -98,7 +98,7 @@ public class JVSFile extends File {
      * @param path L'adresse du fichier dans le système.
      * @see File#File(String)
      */
-    public JVSFile(String path) throws IOException {
+    public JVSSourceFile(String path) throws IOException {
         super(path);
         loadFromFile();
     }
@@ -113,7 +113,7 @@ public class JVSFile extends File {
      * @param uri L'URI à ouvrir.
      * @see File#File(URI)
      */
-    public JVSFile(URI uri) throws IOException {
+    public JVSSourceFile(URI uri) throws IOException {
         super(uri);
         loadFromFile();
     }
@@ -128,9 +128,9 @@ public class JVSFile extends File {
      */
     private void loadFromFile() throws IOException {
         try {
-            content.setValue(FileUtils.readFileToString(this, JVSFile.ENCODING));
+            content.setValue(FileUtils.readFileToString(this, JVSSourceFile.ENCODING));
         } catch (IOException e) {
-            LogFactory.getLog(JVSFile.class).error("Impossible d'ouvrir le fichier " + this, e);
+            LogFactory.getLog(JVSSourceFile.class).error("Impossible d'ouvrir le fichier " + this, e);
             throw e;
         }
     }
@@ -220,16 +220,16 @@ public class JVSFile extends File {
      * <ul><li>Ils ont le même chemain</li>
      * <li>Ils ont le même contenu sur le disque</li>
      * <li>Ils ont le même contenu en mémoire</li></ul></p>
-     * <p><em>NB : Un objet File et JVSFile ne sont pas identiques</em></p>
+     * <p><em>NB : Un objet File et JVSSourceFile ne sont pas identiques</em></p>
      *
      * @return vrai si les deux fichiers sont complétement identiques.
      */
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof JVSFile) {
-            return getAbsolutePath().equals(((JVSFile) obj).getAbsolutePath()) &&
-                    content.getValue().equals(((JVSFile) obj).content.getValue()) &&
-                    saved.getValue().equals(((JVSFile) obj).saved.getValue());
+        if (obj instanceof JVSSourceFile) {
+            return getAbsolutePath().equals(((JVSSourceFile) obj).getAbsolutePath()) &&
+                    content.getValue().equals(((JVSSourceFile) obj).content.getValue()) &&
+                    saved.getValue().equals(((JVSSourceFile) obj).saved.getValue());
         } else {
             return false;
         }
@@ -246,16 +246,16 @@ public class JVSFile extends File {
     /**
      * Charge un fichier depuis le web dans un fichier temporaire.
      */
-    public static JVSFile loadFromWeb(URI fileUri) throws IOException {
-        if (fileUri.getScheme().equals("file")) return new JVSFile(fileUri);
+    public static JVSSourceFile loadFromWeb(URI fileUri) throws IOException {
+        if (fileUri.getScheme().equals("file")) return new JVSSourceFile(fileUri);
         try {
-            final JVSFile file = new JVSFile();
+            final JVSSourceFile file = new JVSSourceFile();
             IOUtils.copy(fileUri.toURL().openStream(), new FileOutputStream(file));
             file.loadFromFile();
             file.saved.set(false);
             return file;
         } catch (IOException e) {
-            LogFactory.getLog(JVSFile.class).error("Impossible d'ouvrir " + fileUri, e);
+            LogFactory.getLog(JVSSourceFile.class).error("Impossible d'ouvrir " + fileUri, e);
             throw e;
         }
     }
