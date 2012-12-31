@@ -141,9 +141,6 @@
         </license>
     </licenses>
     <modules>
-        <module>javascool-compiler</module>
-        <module>javascool-proglets-manager</module>
-        <module>javascool-core</module>
-        <module>javascool-ui</module>
+        <module>javascool-framework</module>
     </modules>
 </project>
